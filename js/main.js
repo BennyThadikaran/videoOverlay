@@ -49,16 +49,18 @@ var vidPlugin = (function() {
           return el;
       },
 
-      showOverlay = function(id) {
-
+      hideOverlay = function() {
         var itemsToClear = document.getElementsByClassName("viewable");
 
         if (itemsToClear.length) {
-          // clear out existing pop ups
+          // clear out visible overlays
           itemsToClear[0].className = "";
         }
+      },
 
+      showOverlay = function(id) {
         // bring the popups in view
+        hideOverlay();
         document.getElementById(id).className = "viewable";
       },
 
@@ -73,6 +75,9 @@ var vidPlugin = (function() {
               showOverlay(obj[key].start);
             }
           }
+        }
+        if (t >= obj[key].end) {
+          hideOverlay();
         }
       };
 
