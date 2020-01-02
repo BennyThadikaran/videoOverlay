@@ -1,6 +1,6 @@
 .vid-plugin {
-  width: 500px;
-  height: 283px;
+  width: 712px;
+  height: 400px;
   margin-left: auto;
   margin-right: auto;
   overflow: hidden;
@@ -9,34 +9,54 @@
 
 .vid-plugin .video {
   display: block;
-  width: 500px;
-  height: 283px;
+  width: 712px;
+  height: 400px;
+}
+
+.vid-plugin .wrapper {
+  position: absolute;
+  top: 0;
+  height: 400px;
+}
+
+.vid-plugin .wrapper-hide {
+  right: -80px;
+}
+
+.vid-plugin .wrapper-show {
+  right: 0;
+  overflow-y: scroll;
 }
 
 .vid-plugin .overlay {
   display: block;
-  position: absolute;
-  top: 0;
-  right: -45px;
 }
 
-.vid-plugin .overlay a {
+.vid-plugin a {
   display: block;
+  margin-bottom: -3px;
 }
 
-.vid-plugin .overlay .viewable {
-  position: relative;
-  right: 46px;
+.vid-plugin img {
+  width: 80px;
+  height: auto;
+}
+
+.vid-plugin .viewable {
+  position: absolute;
+  right: 82px;
+  bottom: 41px;
+}
+
+.vid-plugin .viewable img {
+  width: 120px;
+  height: auto;
 }
 
 .vid-plugin:hover .scale-up-hor-right,
 .vid-plugin .viewable {
 	-webkit-animation: scale-up-hor-right 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
 	        animation: scale-up-hor-right 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
-}
-
-.vid-plugin:hover .overlay {
-  right: 0;
 }
 
 /* ----------------------------------------------

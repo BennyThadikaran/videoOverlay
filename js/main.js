@@ -2,18 +2,21 @@ var vidPlugin = (function() {
   var v = document.getElementById("video"),
 
       init = function(obj) {
-        var init;
+        var wrapper = document.getElementById("wrapper");
 
         generateHTML(obj);
 
         v.addEventListener("play", function() {
+
           // run activateOverlay function every second
           int = setInterval(function() {
             activateOverlay(obj);
           }, 1000);
+          wrapper.className = "wrapper wrapper-hide";
 
           v.addEventListener("pause", function() {
             clearInterval(int);
+            wrapper.className = "wrapper wrapper-show scale-up-hor-right";
           });
         });
       },
@@ -101,6 +104,76 @@ window.onload = function() {
       Link: "https://amazon.in",
       start: 7,
       end: 11
+    },
+    2:{
+      Name: "Item 2",
+      Image: "https://via.placeholder.com/45",
+      Link: "https://amazon.in",
+      start: 8,
+      end: 12
+    },
+    3:{
+      Name: "Item 2",
+      Image: "https://via.placeholder.com/45",
+      Link: "https://amazon.in",
+      start: 13,
+      end: 15
+    },
+    4:{
+      Name: "Item 2",
+      Image: "https://via.placeholder.com/45",
+      Link: "https://amazon.in",
+      start: 16,
+      end: 18
+    },
+    5:{
+      Name: "Item 2",
+      Image: "https://via.placeholder.com/45",
+      Link: "https://amazon.in",
+      start: 19,
+      end: 22
+    },
+    6:{
+      Name: "Item 2",
+      Image: "https://via.placeholder.com/45",
+      Link: "https://amazon.in",
+      start: 23,
+      end: 25
+    },
+    7:{
+      Name: "Item 2",
+      Image: "https://via.placeholder.com/45",
+      Link: "https://amazon.in",
+      start: 26,
+      end: 28
+    },
+    8:{
+      Name: "Item 2",
+      Image: "https://via.placeholder.com/45",
+      Link: "https://amazon.in",
+      start: 29,
+      end: 30
+    },
+    8:{
+      Name: "Item 2",
+      Image: "https://via.placeholder.com/45",
+      Link: "https://amazon.in",
+      start: 31,
+      end: 34
+    },
+    9:{
+      Name: "Item 2",
+      Image: "https://via.placeholder.com/45",
+      Link: "https://amazon.in",
+      start: 35,
+      end: 37
+    },
+    10:{
+      Name: "Item 2",
+      Image: "https://via.placeholder.com/45",
+      Link: "https://amazon.in",
+      start: 38,
+      end: 40
     }
   });
 }
