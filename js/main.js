@@ -4,6 +4,8 @@ var vidPlugin = (function() {
       init = function(obj) {
         var init;
 
+        generateHTML(obj);
+
         v.addEventListener("play", function() {
           // run activateOverlay function every second
           int = setInterval(function() {
@@ -14,6 +16,37 @@ var vidPlugin = (function() {
             clearInterval(int);
           });
         });
+      },
+
+      generateHTML = function(obj) {
+        var keys = Object.keys(obj),
+            overlay = document.getElementById("vid-plugin-overlay"),
+            a,
+            img,
+            frag = document.createDocumentFragment();
+
+        for (key in obj) {
+          if (obj.hasOwnProperty(key)) {
+            a = createEl("a", { href: obj[key].Link, id: obj[key].start });
+            img = createEl("img", {src: obj[key].Image, alt: obj[key].Name});
+            a.appendChild(img);
+            frag.appendChild(a);
+          }
+        }
+        overlay.appendChild(frag);
+      },
+
+      createEl = function (elem, attributes, text) {
+          var el = document.createElement(elem);
+
+          if (typeof attributes === "object") {
+              for (var attr in attributes) {
+                  el.setAttribute(attr, attributes[attr]);
+              }
+          }
+
+          if (text) el.textContent = text;
+          return el;
       },
 
       showOverlay = function(id) {
@@ -37,7 +70,7 @@ var vidPlugin = (function() {
         for (key in obj) {
           if (obj.hasOwnProperty(key)) {
             if (t >= obj[key].start && t <= obj[key].end) {
-              showOverlay("p1");
+              showOverlay(obj[key].start);
             }
           }
         }
@@ -49,5 +82,20 @@ var vidPlugin = (function() {
 }());
 
 window.onload = function() {
-  vidPlugin.init({a:{start: 1, end: 5}, b: 2});
+  vidPlugin.init({
+    0:{
+      Name: "Item 1",
+      Image: "https://via.placeholder.com/45",
+      Link: "https://amazon.in",
+      start: 1,
+      end: 5
+    },
+    1:{
+      Name: "Item 2",
+      Image: "https://via.placeholder.com/45",
+      Link: "https://amazon.in",
+      start: 7,
+      end: 11
+    }
+  });
 }

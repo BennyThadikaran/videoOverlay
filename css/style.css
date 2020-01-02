@@ -13,18 +13,18 @@
   height: 283px;
 }
 
-.vid-plugin .products {
+.vid-plugin .overlay {
   display: block;
   position: absolute;
   top: 0;
   right: -45px;
 }
 
-.vid-plugin .products a {
+.vid-plugin .overlay a {
   display: block;
 }
 
-.vid-plugin .products .viewable {
+.vid-plugin .overlay .viewable {
   position: relative;
   right: 46px;
 }
@@ -35,7 +35,7 @@
 	        animation: scale-up-hor-right 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
 }
 
-.vid-plugin:hover .products {
+.vid-plugin:hover .overlay {
   right: 0;
 }
 
