@@ -10,10 +10,10 @@ Fixed
 - Added Modal box support with Image, product details and buy button.
 - Overlays can now be clicked to open Modal box displaying product details.
 - Pause video when modal is open and vice versa.
+- Added Product title to overlays.
+- Modal contents are now dynamically generated as per product clicked.
 
 
 To Do
 -
-- Add product title to each overlay on the image.
-- Dynamically generate modal content as per product overlay clicked and populate relevant details
 - Update video link from brightcove as provided by Amit.
