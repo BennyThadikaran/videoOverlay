@@ -8,9 +8,6 @@
     <link rel="stylesheet" href="css/style.css">
 
     <title>Hello, world!</title>
-  </head>
-  <body>
-    <h1>Hello, world!</h1>
     <script>
       // This code loads the IFrame Player API code asynchronously.
       var tag = document.createElement('script');
@@ -19,7 +16,7 @@
       var firstScriptTag = document.getElementsByTagName('script')[0];
       firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-      // This function creates an <iframe> (and YouTube player)
+      // creates an <iframe> (and YouTube player)
       // after the API code downloads.
       var player;
       function onYouTubeIframeAPIReady() {
@@ -34,12 +31,15 @@
         });
       }
     </script>
-
+  </head>
+  <body>
+    <h1>Hello, world!</h1>
 
     <div class="vid-plugin">
-      <!-- The <iframe> (and video player) will replace this <div> tag. -->
-      <div id="player"></div>
-      <!-- <video class="video" id="video" src="video/point1.mp4" autoplay controls></video> -->
+
+      <div id="player">
+          <!-- The <iframe> (and video player) will replace this <div> tag. -->
+      </div>
 
       <div class="wrapper wrapper-hide" id="wrapper">
         <div class="overlay" id="vid-plugin-overlay">

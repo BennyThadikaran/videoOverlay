@@ -13,8 +13,3 @@ Fixed
 - Added Product title to overlays.
 - Modal contents are now dynamically generated as per product clicked.
 - Integrated youtube api with existing code.
-
-
-To Do
--
-- Clicking on video in Mobiles does not pause video.

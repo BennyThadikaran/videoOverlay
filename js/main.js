@@ -1,39 +1,10 @@
+// Uses the youtube api.
+// The global player object provides all relevant video actions
 var vidPlugin = (function() {
   var data,
 
-      hideOverlay = function() {
-        var itemsToClear = document.getElementsByClassName("viewable");
-
-        if (itemsToClear.length) {
-          // clear out visible overlays
-          itemsToClear[0].className = "";
-        }
-      },
-
-      showOverlay = function(id) {
-        // bring the popups in view
-        var a = document.getElementById("overlay-" + id);
-        hideOverlay();
-        a.className = "viewable";
-      },
-
-      activateOverlay = function() {
-        // get the current time
-        var t = player.getCurrentTime(),
-            keys = Object.keys(data);
-
-        for (key in data) {
-          if (data.hasOwnProperty(key)) {
-            if (t >= data[key].start && t <= data[key].end) {
-              showOverlay(key);
-            }
-          }
-        }
-        if (t >= data[key].end) {
-          hideOverlay();
-        }
-      },
-
+      // helper function for generating HTML elements
+      // elem - tag name, attributes - Object key: value pair, text - optional text content
       createEl = function (elem, attributes, text) {
           var el = document.createElement(elem);
 
@@ -47,48 +18,44 @@ var vidPlugin = (function() {
           return el;
       },
 
-      generateModal = function(el) {
-        var modal = document.getElementById("vid-plugin-modal"),
-            closeBtn = createEl("span", {class: "close", id: "vid-plugin-modal-close"}, "×"),
-            contentDiv = createEl("div", {class: "content"}),
-            imgDiv = createEl("div", {class: "img"}),
-            detailsDiv = createEl("div", {class: "details"}),
-            img = createEl("img", {src: el.dataset.src, alt: el.dataset.name}),
-            itemName = createEl("p", {}, el.dataset.name),
-            itemDesc = createEl("p", {}, el.dataset.desc),
-            ctaBtn = createEl("button", {type: "button", name: "button"}, "BUY NOW");
+      // hides previously opened overlays
+      hideOverlay = function() {
+        var itemsToClear = document.getElementsByClassName("viewable");
 
-            imgDiv.appendChild(img);
-            detailsDiv.appendChild(itemName);
-            detailsDiv.appendChild(itemDesc);
-            detailsDiv.appendChild(ctaBtn);
-            contentDiv.appendChild(imgDiv);
-            contentDiv.appendChild(detailsDiv);
-            modal.appendChild(closeBtn);
-            modal.appendChild(contentDiv);
+        if (itemsToClear.length) {
+          // clear out visible overlays
+          itemsToClear[0].className = "";
+        }
       },
 
-      runModal = function(e) {
-          e.preventDefault();
-
-          var el = e.target.tagName === "A" ? e.target : e.target.parentElement;
-
-          generateModal(el);
-
-          var modal = document.getElementById("vid-plugin-modal");
-          var close = document.getElementById("vid-plugin-modal-close");
-
-          // pause the video
-          player.pauseVideo();
-
-          modal.style.display = "block";
-          close.addEventListener("click", function() {
-            close.parentElement.style.display = "none";
-            player.playVideo();
-          });
-          return false;
+      showOverlay = function(id) {
+        // bring the overlay in view
+        var a = document.getElementById("overlay-" + id);
+        hideOverlay();
+        a.className = "viewable";
       },
 
+      // compares elapsed time on video and activates relevant overlay
+      activateOverlay = function() {
+        // get the current time
+        var t = player.getCurrentTime(),
+            keys = Object.keys(data);
+
+        for (key in data) {
+          if (data.hasOwnProperty(key)) {
+            if (t >= data[key].start && t <= data[key].end) {
+              showOverlay(key);
+            }
+          }
+        }
+
+        // if overlay time has elapsed remove from view
+        if (t >= data[key].end) {
+          hideOverlay();
+        }
+      },
+
+      // generate HTML content for overlay
       generateOverlay = function() {
         var keys = Object.keys(data),
             overlay = document.getElementById("vid-plugin-overlay"),
@@ -116,6 +83,51 @@ var vidPlugin = (function() {
         overlay.appendChild(frag);
       },
 
+      // dynamically generates HTML for Modal
+      generateModal = function(el) {
+        var modal = document.getElementById("vid-plugin-modal"),
+            closeBtn = createEl("span", {class: "close", id: "vid-plugin-modal-close"}, "×"),
+            contentDiv = createEl("div", {class: "content"}),
+            imgDiv = createEl("div", {class: "img"}),
+            detailsDiv = createEl("div", {class: "details"}),
+            img = createEl("img", {src: el.dataset.src, alt: el.dataset.name}),
+            itemName = createEl("p", {}, el.dataset.name),
+            itemDesc = createEl("p", {}, el.dataset.desc),
+            ctaBtn = createEl("button", {type: "button", name: "button"}, "BUY NOW");
+
+            imgDiv.appendChild(img);
+            detailsDiv.appendChild(itemName);
+            detailsDiv.appendChild(itemDesc);
+            detailsDiv.appendChild(ctaBtn);
+            contentDiv.appendChild(imgDiv);
+            contentDiv.appendChild(detailsDiv);
+            modal.appendChild(closeBtn);
+            modal.appendChild(contentDiv);
+      },
+
+      // activates Modal for relevant product
+      runModal = function(e) {
+          e.preventDefault();
+
+          var el = e.target.tagName === "A" ? e.target : e.target.parentElement;
+
+          generateModal(el);
+
+          var modal = document.getElementById("vid-plugin-modal");
+          var close = document.getElementById("vid-plugin-modal-close");
+
+          // pause the video
+          player.pauseVideo();
+
+          modal.style.display = "block";
+          close.addEventListener("click", function() {
+            close.parentElement.style.display = "none";
+            player.playVideo();
+          });
+          return false;
+      },
+
+      // pass the dataObj containing data related to overlays
       init = function(dataObj) {
         data = dataObj;
 
@@ -126,6 +138,7 @@ var vidPlugin = (function() {
         wrapper.addEventListener("click", runModal);
       },
 
+      // Handler for events fired by Youtube api
       handler = function(e) {
         if (e.data === 1) {
           // if playing run activateOverlay function every second
