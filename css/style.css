@@ -7,6 +7,10 @@
   position: relative;
 }
 
+.vid-plugin * {
+  box-sizing: border-box;
+}
+
 .vid-plugin .video {
   display: block;
   width: 712px;
@@ -53,6 +57,60 @@
   height: auto;
 }
 
+/* vid-plugin Modal */
+.vid-plugin .modal {
+  display: none;
+  position: absolute;
+  width: 600px;
+  height: 350px;
+  background: white;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.vid-plugin .modal .content {
+  width: 600px;
+  height: 350px;
+  padding: 10px;
+}
+
+.vid-plugin .modal .img {
+  width: 277px;
+  height: 350px;
+  display: inline-block;
+}
+
+.vid-plugin .modal img {
+  width: 100%;
+  height: auto;
+}
+
+.vid-plugin .modal .details {
+  width: 277px;
+  height: 350px;
+  padding: 10px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.vid-plugin .modal .close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.vid-plugin .modal .close:hover,
+.vid-plugin .modal .close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+/* Animations */
 .vid-plugin:hover .scale-up-hor-right,
 .vid-plugin .viewable {
 	-webkit-animation: scale-up-hor-right 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;

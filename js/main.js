@@ -17,8 +17,22 @@ var vidPlugin = (function() {
           v.addEventListener("pause", function() {
             clearInterval(int);
             wrapper.className = "wrapper wrapper-show scale-up-hor-right";
+
+            wrapper.addEventListener("click", runModal);
           });
         });
+      },
+
+      runModal = function(e) {
+          e.preventDefault();
+          var modal = document.getElementById("vid-plugin-modal");
+          var close = document.getElementById("vid-plugin-modal-close");
+
+          modal.style.display = "block";
+          close.addEventListener("click", function() {
+            close.parentElement.style.display = "none";
+          });
+          return false;
       },
 
       generateHTML = function(obj) {
@@ -30,8 +44,8 @@ var vidPlugin = (function() {
 
         for (key in obj) {
           if (obj.hasOwnProperty(key)) {
-            a = createEl("a", { href: obj[key].Link, id: obj[key].start });
-            img = createEl("img", {src: obj[key].Image, alt: obj[key].Name});
+            a = createEl("a", { href: "#"});
+            img = createEl("img", {src: obj[key].Image, alt: obj[key].Name, id: key});
             a.appendChild(img);
             frag.appendChild(a);
           }

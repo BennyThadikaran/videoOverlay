@@ -14,8 +14,23 @@
     <h1>Hello, world!</h1>
     <div class="vid-plugin">
       <video class="video" id="video" src="video/point1.mp4" autoplay controls></video>
+
       <div class="wrapper wrapper-hide" id="wrapper">
         <div class="overlay" id="vid-plugin-overlay"></div>
+      </div>
+
+      <div class="modal" id="vid-plugin-modal" role="dialog">
+        <span class="close" id="vid-plugin-modal-close">&times;</span>
+        <div class="content">
+          <div class="img">
+            <img src="https://via.placeholder.com/45" alt="">
+          </div>
+          <div class="details">
+            <p>Item name 1</p>
+            <p>Product details 1</p>
+            <button type="button" name="button">Buy Now</button>
+          </div>
+        </div>
       </div>
     </div>
     <script src="js/main.js"></script>
