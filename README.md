@@ -17,3 +17,4 @@ Fixed
 To Do
 -
 - Update video link from brightcove as provided by Amit.
+- Clicking on video in Mobiles does not pause video.
