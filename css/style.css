@@ -11,7 +11,7 @@
   box-sizing: border-box;
 }
 
-.vid-plugin .video {
+.vid-plugin #player {
   display: block;
   width: 712px;
   height: 400px;
@@ -124,7 +124,6 @@
 
 
 /* Animations */
-.vid-plugin:hover .scale-up-hor-right,
 .vid-plugin .viewable {
 	-webkit-animation: scale-up-hor-right 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
 	        animation: scale-up-hor-right 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;

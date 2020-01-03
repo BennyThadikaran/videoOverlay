@@ -12,9 +12,11 @@ Fixed
 - Pause video when modal is open and vice versa.
 - Added Product title to overlays.
 - Modal contents are now dynamically generated as per product clicked.
+- Integrated youtube api with existing code.
 
 
 To Do
 -
-- Update video link from brightcove as provided by Amit.
 - Clicking on video in Mobiles does not pause video.
+- Issue with getting correct time elapsed on the video. API returns the same time over and over.
+https://stackoverflow.com/questions/59578916/youtube-api-getduration-method-returns-the-same-timing

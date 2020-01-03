@@ -1,5 +1,6 @@
 var vidPlugin = (function() {
-  var v = document.getElementById("video"),
+  var data,
+      player,
 
       hideOverlay = function() {
         var itemsToClear = document.getElementsByClassName("viewable");
@@ -12,26 +13,39 @@ var vidPlugin = (function() {
 
       showOverlay = function(id) {
         // bring the popups in view
-        var a = document.getElementById(id);
+        var a = document.getElementById("overlay-" + id);
         hideOverlay();
         a.className = "viewable";
       },
 
-      activateOverlay = function(obj) {
+      activateOverlay = function() {
         // get the current time
-        var t = v.currentTime,
-            keys = Object.keys(obj);
+        var t = player.getDuration(),
+            keys = Object.keys(data);
 
-        for (key in obj) {
-          if (obj.hasOwnProperty(key)) {
-            if (t >= obj[key].start && t <= obj[key].end) {
+        for (key in data) {
+          if (data.hasOwnProperty(key)) {
+            if (t >= data[key].start && t <= data[key].end) {
               showOverlay(key);
             }
           }
         }
-        if (t >= obj[key].end) {
+        if (t >= data[key].end) {
           hideOverlay();
         }
+      },
+
+      createEl = function (elem, attributes, text) {
+          var el = document.createElement(elem);
+
+          if (typeof attributes === "object") {
+              for (var attr in attributes) {
+                  el.setAttribute(attr, attributes[attr]);
+              }
+          }
+
+          if (text) el.textContent = text;
+          return el;
       },
 
       generateModal = function(el) {
@@ -66,48 +80,35 @@ var vidPlugin = (function() {
           var close = document.getElementById("vid-plugin-modal-close");
 
           // pause the video
-          v.pause();
+          player.pauseVideo();
 
           modal.style.display = "block";
           close.addEventListener("click", function() {
             close.parentElement.style.display = "none";
-            v.play();
+            player.playVideo();
           });
           return false;
       },
 
-      createEl = function (elem, attributes, text) {
-          var el = document.createElement(elem);
-
-          if (typeof attributes === "object") {
-              for (var attr in attributes) {
-                  el.setAttribute(attr, attributes[attr]);
-              }
-          }
-
-          if (text) el.textContent = text;
-          return el;
-      },
-
-      generateOverlay = function(obj) {
-        var keys = Object.keys(obj),
+      generateOverlay = function() {
+        var keys = Object.keys(data),
             overlay = document.getElementById("vid-plugin-overlay"),
             a,
             img,
             span,
             frag = document.createDocumentFragment();
 
-        for (key in obj) {
-          if (obj.hasOwnProperty(key)) {
+        for (key in data) {
+          if (data.hasOwnProperty(key)) {
             a = createEl("a", {
               href: "#",
-              id: key,
-              "data-src": obj[key].Image,
-              "data-name": obj[key].Name,
-              "data-desc": obj[key].Description
+              id: "overlay-" + key,
+              "data-src": data[key].Image,
+              "data-name": data[key].Name,
+              "data-desc": data[key].Description
             });
-            img = createEl("img", {src: obj[key].Image, alt: obj[key].Name, id: key});
-            span = createEl("span", {}, obj[key].Name)
+            img = createEl("img", {src: data[key].Image, alt: data[key].Name, id: key});
+            span = createEl("span", {}, data[key].Name)
             a.appendChild(img);
             a.appendChild(span)
             frag.appendChild(a);
@@ -116,35 +117,41 @@ var vidPlugin = (function() {
         overlay.appendChild(frag);
       },
 
-      init = function(obj) {
+      init = function(youtubeObj, dataObj) {
+        data = dataObj;
+        player = youtubeObj;
+
         var wrapper = document.getElementById("wrapper");
 
-        generateOverlay(obj);
+        generateOverlay();
 
         wrapper.addEventListener("click", runModal);
+      },
 
-        v.addEventListener("play", function() {
-
-          // run activateOverlay function every second
+      handler = function(e) {
+        if (e.data === 1) {
+          // if playing run activateOverlay function every second
           int = setInterval(function() {
-            activateOverlay(obj);
+            activateOverlay();
           }, 1000);
           wrapper.className = "wrapper wrapper-hide";
+        }
 
-          v.addEventListener("pause", function() {
-            clearInterval(int);
-            wrapper.className = "wrapper wrapper-show scale-up-hor-right";
-          });
-        });
+        if (e.data === 2) {
+          // paused
+          clearInterval(int);
+          wrapper.className = "wrapper wrapper-show scale-up-hor-right";
+        }
       };
 
       return {
-        init: init
+        init: init,
+        handler: handler
       }
 }());
 
 window.onload = function() {
-  vidPlugin.init({
+  vidPlugin.init(player, {
     0:{
       Name: "Item 1",
       Image: "https://via.placeholder.com/45",

@@ -5,15 +5,41 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/style.css">
 
     <title>Hello, world!</title>
   </head>
   <body>
     <h1>Hello, world!</h1>
+    <script>
+      // This code loads the IFrame Player API code asynchronously.
+      var tag = document.createElement('script');
+
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      // This function creates an <iframe> (and YouTube player)
+      // after the API code downloads.
+      var player;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+          height: '400',
+          width: '712',
+          videoId: 'wzL88QcOs0w',
+          fs: 0,
+          events: {
+            'onStateChange': vidPlugin.handler
+          }
+        });
+      }
+    </script>
+
+
     <div class="vid-plugin">
-      <video class="video" id="video" src="video/point1.mp4" autoplay controls></video>
+      <!-- The <iframe> (and video player) will replace this <div> tag. -->
+      <div id="player"></div>
+      <!-- <video class="video" id="video" src="video/point1.mp4" autoplay controls></video> -->
 
       <div class="wrapper wrapper-hide" id="wrapper">
         <div class="overlay" id="vid-plugin-overlay">
