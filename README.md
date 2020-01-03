@@ -18,5 +18,3 @@ Fixed
 To Do
 -
 - Clicking on video in Mobiles does not pause video.
-- Issue with getting correct time elapsed on the video. API returns the same time over and over.
-https://stackoverflow.com/questions/59578916/youtube-api-getduration-method-returns-the-same-timing
