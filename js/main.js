@@ -1,6 +1,5 @@
 var vidPlugin = (function() {
   var data,
-      player,
 
       hideOverlay = function() {
         var itemsToClear = document.getElementsByClassName("viewable");
@@ -20,7 +19,7 @@ var vidPlugin = (function() {
 
       activateOverlay = function() {
         // get the current time
-        var t = player.getDuration(),
+        var t = player.getCurrentTime(),
             keys = Object.keys(data);
 
         for (key in data) {
@@ -117,9 +116,8 @@ var vidPlugin = (function() {
         overlay.appendChild(frag);
       },
 
-      init = function(youtubeObj, dataObj) {
+      init = function(dataObj) {
         data = dataObj;
-        player = youtubeObj;
 
         var wrapper = document.getElementById("wrapper");
 
@@ -151,7 +149,7 @@ var vidPlugin = (function() {
 }());
 
 window.onload = function() {
-  vidPlugin.init(player, {
+  vidPlugin.init({
     0:{
       Name: "Item 1",
       Image: "https://via.placeholder.com/45",
