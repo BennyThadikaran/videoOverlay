@@ -6,6 +6,8 @@ var vidPlugin = (function() {
 
         generateHTML(obj);
 
+        wrapper.addEventListener("click", runModal);
+
         v.addEventListener("play", function() {
 
           // run activateOverlay function every second
@@ -17,8 +19,6 @@ var vidPlugin = (function() {
           v.addEventListener("pause", function() {
             clearInterval(int);
             wrapper.className = "wrapper wrapper-show scale-up-hor-right";
-
-            wrapper.addEventListener("click", runModal);
           });
         });
       },
@@ -28,9 +28,13 @@ var vidPlugin = (function() {
           var modal = document.getElementById("vid-plugin-modal");
           var close = document.getElementById("vid-plugin-modal-close");
 
+          // pause the video
+          v.pause();
+
           modal.style.display = "block";
           close.addEventListener("click", function() {
             close.parentElement.style.display = "none";
+            v.play();
           });
           return false;
       },
@@ -40,13 +44,16 @@ var vidPlugin = (function() {
             overlay = document.getElementById("vid-plugin-overlay"),
             a,
             img,
+            span,
             frag = document.createDocumentFragment();
 
         for (key in obj) {
           if (obj.hasOwnProperty(key)) {
-            a = createEl("a", { href: "#"});
+            a = createEl("a", { href: "#", id: key});
             img = createEl("img", {src: obj[key].Image, alt: obj[key].Name, id: key});
+            span = createEl("span", {}, obj[key].Name)
             a.appendChild(img);
+            a.appendChild(span)
             frag.appendChild(a);
           }
         }
@@ -77,8 +84,9 @@ var vidPlugin = (function() {
 
       showOverlay = function(id) {
         // bring the popups in view
+        var a = document.getElementById(id);
         hideOverlay();
-        document.getElementById(id).className = "viewable";
+        a.className = "viewable";
       },
 
       activateOverlay = function(obj) {
@@ -89,7 +97,7 @@ var vidPlugin = (function() {
         for (key in obj) {
           if (obj.hasOwnProperty(key)) {
             if (t >= obj[key].start && t <= obj[key].end) {
-              showOverlay(obj[key].start);
+              showOverlay(key);
             }
           }
         }
@@ -120,70 +128,70 @@ window.onload = function() {
       end: 11
     },
     2:{
-      Name: "Item 2",
+      Name: "Item 3",
       Image: "https://via.placeholder.com/45",
       Link: "https://amazon.in",
       start: 8,
       end: 12
     },
     3:{
-      Name: "Item 2",
+      Name: "Item 4",
       Image: "https://via.placeholder.com/45",
       Link: "https://amazon.in",
       start: 13,
       end: 15
     },
     4:{
-      Name: "Item 2",
+      Name: "Item 5",
       Image: "https://via.placeholder.com/45",
       Link: "https://amazon.in",
       start: 16,
       end: 18
     },
     5:{
-      Name: "Item 2",
+      Name: "Item 6",
       Image: "https://via.placeholder.com/45",
       Link: "https://amazon.in",
       start: 19,
       end: 22
     },
     6:{
-      Name: "Item 2",
+      Name: "Item 7",
       Image: "https://via.placeholder.com/45",
       Link: "https://amazon.in",
       start: 23,
       end: 25
     },
     7:{
-      Name: "Item 2",
+      Name: "Item 8",
       Image: "https://via.placeholder.com/45",
       Link: "https://amazon.in",
       start: 26,
       end: 28
     },
     8:{
-      Name: "Item 2",
+      Name: "Item 9",
       Image: "https://via.placeholder.com/45",
       Link: "https://amazon.in",
       start: 29,
       end: 30
     },
     8:{
-      Name: "Item 2",
+      Name: "Item 10",
       Image: "https://via.placeholder.com/45",
       Link: "https://amazon.in",
       start: 31,
       end: 34
     },
     9:{
-      Name: "Item 2",
+      Name: "Item 11",
       Image: "https://via.placeholder.com/45",
       Link: "https://amazon.in",
       start: 35,
       end: 37
     },
     10:{
-      Name: "Item 2",
+      Name: "Item 12",
       Image: "https://via.placeholder.com/45",
       Link: "https://amazon.in",
       start: 38,

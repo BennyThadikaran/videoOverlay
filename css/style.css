@@ -17,6 +17,7 @@
   height: 400px;
 }
 
+/*  Overlays */
 .vid-plugin .wrapper {
   position: absolute;
   top: 0;
@@ -24,7 +25,7 @@
 }
 
 .vid-plugin .wrapper-hide {
-  right: -80px;
+  right: -114px;
 }
 
 .vid-plugin .wrapper-show {
@@ -36,19 +37,30 @@
   display: block;
 }
 
+/* Individual product overlays */
+
 .vid-plugin a {
   display: block;
   margin-bottom: -3px;
+  position: relative;
+}
+
+.vid-plugin a span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .vid-plugin img {
-  width: 80px;
+  width: 114px;
   height: auto;
 }
 
+/* pop overlays */
 .vid-plugin .viewable {
   position: absolute;
-  right: 82px;
+  right: 116px;
   bottom: 41px;
 }
 
