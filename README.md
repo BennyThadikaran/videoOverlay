@@ -16,5 +16,5 @@ Fixed
 - Overlay panel opens when video has ended.
 - Mouse hover to the right of the video, opens panel.
 - Added relevant documentation in HTML, CSS and JS.
-- Classes critical to JS are marked 'js-<class name>'.
-- id names critical to JS are marked 'vid-plugin-<id name>'.
+- Classes critical to JS are prefixed with 'js-'.
+- id names critical to JS are prefixed with 'vid-plugin-'.
