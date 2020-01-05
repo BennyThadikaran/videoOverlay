@@ -1,3 +1,12 @@
+/***************************
+*   Video Overlay plugin   *
+* #panel                   *
+* #overlay                 *
+* #timeline                *
+* #modal                   *
+* #animations              *
+****************************/
+
 .vid-plugin {
   width: 712px;
   height: 400px;
@@ -11,33 +20,40 @@
   box-sizing: border-box;
 }
 
-.vid-plugin #player {
-  display: block;
-  width: 712px;
-  height: 400px;
+/* Used to activate the overlay panel */
+.js-panel-mousetrap {
+  position: absolute;
+  top: 60px;
+  right: 0;
+  width: 60px;
+  height: 279px;
+  background: transparent;
+  border: 1px solid white; /* only for development & testing */
 }
 
-/*  Overlays */
-.vid-plugin .wrapper {
+/*  #panel  */
+/* wrapper for product overlays */
+.vid-plugin .panel {
   position: absolute;
   top: 0;
   height: 400px;
 }
 
-.vid-plugin .wrapper-hide {
+.vid-plugin .js-panel-hide {
   right: -114px;
 }
 
-.vid-plugin .wrapper-show {
+.vid-plugin .js-panel-show {
   right: 0;
   overflow-y: scroll;
 }
 
+/* #overlay */
+/* Product overlays */
+
 .vid-plugin .overlay {
   display: block;
 }
-
-/* Individual product overlays */
 
 .vid-plugin a {
   display: block;
@@ -57,19 +73,19 @@
   height: auto;
 }
 
-/* pop overlays */
-.vid-plugin .viewable {
+/* #timeline activated overlay */
+.vid-plugin .js-viewable {
   position: absolute;
   right: 116px;
   bottom: 41px;
 }
 
-.vid-plugin .viewable img {
+.vid-plugin .js-viewable img {
   width: 120px;
   height: auto;
 }
 
-/* vid-plugin Modal */
+/* #modal */
 .vid-plugin .modal {
   display: none;
   position: absolute;
@@ -118,13 +134,12 @@
 .vid-plugin .modal .close:hover,
 .vid-plugin .modal .close:focus {
   color: black;
-  text-decoration: none;
   cursor: pointer;
 }
 
 
-/* Animations */
-.vid-plugin .viewable {
+/* #animations */
+.vid-plugin .js-viewable {
 	-webkit-animation: scale-up-hor-right 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
 	        animation: scale-up-hor-right 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
 }

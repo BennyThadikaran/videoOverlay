@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/vid-plugin.css">
 
     <title>Hello, world!</title>
     <script>
@@ -20,13 +20,13 @@
       // after the API code downloads.
       var player;
       function onYouTubeIframeAPIReady() {
-        player = new YT.Player('player', {
-          height: '400',
+        player = new YT.Player('vid-plugin-player', {
+          height: '400',  // height and width must match the .vid-plugin
           width: '712',
-          videoId: 'wzL88QcOs0w',
-          fs: 0,
+          videoId: 'wzL88QcOs0w', // id of the youtube video
+          fs: 0, // fullscreen 0 disabled , 1 enabled
           events: {
-            'onStateChange': vidPlugin.handler
+            'onStateChange': vidPlugin.handler // specify the js event handler
           }
         });
       }
@@ -37,11 +37,16 @@
 
     <div class="vid-plugin">
 
-      <div id="player">
+      <div id="vid-plugin-player">
+          <!-- id must match first argument passed into YT.Player (included in the head tag) -->
           <!-- The <iframe> (and video player) will replace this <div> tag. -->
       </div>
 
-      <div class="wrapper wrapper-hide" id="wrapper">
+      <div class="js-panel-mousetrap" id="vid-plugin-mousetrap">
+        <!-- Mouse hover event activated. Brings up overlay panel -->
+      </div>
+
+      <div class="panel js-panel-hide" id="vid-plugin-panel">
         <div class="overlay" id="vid-plugin-overlay">
         <!-- JS generated content | function: generateOverlay -->
         </div>
@@ -51,6 +56,6 @@
         <!-- JS generated content | function: generateModal -->
       </div>
     </div>
-    <script src="js/main.js"></script>
+    <script src="js/vid-plugin.js"></script>
   </body>
 </html>
