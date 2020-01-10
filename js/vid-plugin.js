@@ -8,6 +8,30 @@
 var vidPlugin = (function() {
   var data,
 
+  // ------------ EDITABLE CONTANTS ------------
+      panel = document.getElementById("vid-plugin-panel"),
+      prefix = "vid-plugin-",
+      showPanelClass = "panel js-panel-show scale-up-hor-right",
+      hidePanelClass = "panel js-panel-hide",
+      viewableClass = "js-viewable",
+      overlayWrapperClass = prefix + "overlay",
+      overlayClass = prefix + "overlay-",
+
+      mouseTrapId = prefix + "mousetrap",
+
+      // Modal
+      ctaText = "BUY NOW",
+      modalId = prefix + "modal",
+      modalCloseId = prefix + "modal-close",
+      closeClass = "close",
+      detailsClass = "details",
+      contentClass = "content",
+      imgClass = "img",
+
+  // ------------AVOID EDITING BEYOND THIS LINE ------------
+
+
+
       // helper function for generating HTML elements
       // returns HTML DOM element tag
       // @elem - tag name to be created,
@@ -27,18 +51,16 @@ var vidPlugin = (function() {
       },
 
       showPanel = function() {
-        var wrapper = document.getElementById("vid-plugin-panel");
-        wrapper.className = "panel js-panel-show scale-up-hor-right";
+        panel.className = showPanelClass;
       },
 
       hidePanel = function() {
-        var wrapper = document.getElementById("vid-plugin-panel");
-        wrapper.className = "panel js-panel-hide scale-up-hor-right";
+        panel.className = hidePanelClass;
       },
 
       // hides previously opened overlays
       hideOverlay = function() {
-        var itemsToClear = document.getElementsByClassName("js-viewable");
+        var itemsToClear = document.getElementsByClassName(viewableClass);
 
         if (itemsToClear.length) {
           // clear out visible overlays
@@ -50,8 +72,8 @@ var vidPlugin = (function() {
         // hide the previous overlay
         hideOverlay();
 
-        var a = document.getElementById("vid-plugin-overlay-" + id);
-        a.className = "js-viewable";
+        var a = document.getElementById(overlayClass + id);
+        a.className = viewableClass;
       },
 
       // compares elapsed time on video and activates relevant overlay
@@ -77,7 +99,7 @@ var vidPlugin = (function() {
       // generate HTML content for overlay
       generateOverlay = function() {
         var keys = Object.keys(data),
-            overlay = document.getElementById("vid-plugin-overlay"),
+            overlay = document.getElementById(overlayWrapperClass),
             a,
             img,
             span,
@@ -86,7 +108,7 @@ var vidPlugin = (function() {
         data.forEach(function(key, i) {
           a = createEl("a", {
             href: "#",
-            id: "vid-plugin-overlay-" + i,
+            id: overlayClass + i,
             "data-src": key.Image,
             "data-name": key.Name,
             "data-desc": key.Description
@@ -103,15 +125,15 @@ var vidPlugin = (function() {
 
       // dynamically generates HTML for Modal
       generateModal = function(el) {
-        var modal = document.getElementById("vid-plugin-modal"),
-            closeBtn = createEl("span", {class: "close", id: "vid-plugin-modal-close"}, "×"),
-            contentDiv = createEl("div", {class: "content"}),
-            imgDiv = createEl("div", {class: "img"}),
-            detailsDiv = createEl("div", {class: "details"}),
+        var modal = document.getElementById(modalId),
+            closeBtn = createEl("span", {class: closeClass, id: modalCloseId}, "×"),
+            contentDiv = createEl("div", {class: contentClass}),
+            imgDiv = createEl("div", {class: imgClass}),
+            detailsDiv = createEl("div", {class: detailsClass}),
             img = createEl("img", {src: el.dataset.src, alt: el.dataset.name}),
             itemName = createEl("p", {}, el.dataset.name),
             itemDesc = createEl("p", {}, el.dataset.desc),
-            ctaBtn = createEl("button", {type: "button", name: "button"}, "BUY NOW");
+            ctaBtn = createEl("button", {type: "button", name: "button"}, ctaText);
 
             imgDiv.appendChild(img);
             detailsDiv.appendChild(itemName);
@@ -131,8 +153,8 @@ var vidPlugin = (function() {
 
           generateModal(el);
 
-          var modal = document.getElementById("vid-plugin-modal");
-          var close = document.getElementById("vid-plugin-modal-close");
+          var modal = document.getElementById(modalId);
+          var close = document.getElementById(modalCloseId);
 
           // pause the video
           player.pauseVideo();
@@ -148,20 +170,18 @@ var vidPlugin = (function() {
       // initialises the plugin
       // expects array of objects as argument (overlay data)
       init = function(dataObj) {
-        var wrapper = document.getElementById("vid-plugin-panel");
-
         data = dataObj;
 
         generateOverlay();
 
-        wrapper.addEventListener("click", runModal);
+        panel.addEventListener("click", runModal);
       },
 
       // Handler for events fired by Youtube api
       handler = function(e) {
         // playing
         if (e.data === 1) {
-          var mousetrap = document.getElementById("vid-plugin-mousetrap");
+          var mousetrap = document.getElementById(mouseTrapId);
 
           // run activateOverlay function every second
           int = setInterval(function() {
@@ -196,84 +216,84 @@ window.onload = function() {
 // sample data for testing | Only for development
 var dataObj = [
   {
-    Name: "Item 1",
+    Name: "Overlay 1",
     Image: "https://via.placeholder.com/45",
     Description: "ipsom Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     start: 1,
     end: 5
   },
   {
-    Name: "Item 2",
+    Name: "Overlay 2",
     Image: "https://via.placeholder.com/45",
     Description: "ipsom Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     start: 7,
     end: 11
   },
   {
-    Name: "Item 3",
+    Name: "Overlay 3",
     Image: "https://via.placeholder.com/45",
     Description: "ipsom Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     start: 8,
     end: 12
   },
   {
-    Name: "Item 4",
+    Name: "Overlay 4",
     Image: "https://via.placeholder.com/45",
     Description: "ipsom Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     start: 13,
     end: 15
   },
   {
-    Name: "Item 5",
+    Name: "Overlay 5",
     Image: "https://via.placeholder.com/45",
     Description: "ipsom Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     start: 16,
     end: 18
   },
   {
-    Name: "Item 6",
+    Name: "Overlay 6",
     Image: "https://via.placeholder.com/45",
     Description: "ipsom Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     start: 19,
     end: 22
   },
   {
-    Name: "Item 7",
+    Name: "Overlay 7",
     Image: "https://via.placeholder.com/45",
     Description: "ipsom Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     start: 23,
     end: 25
   },
   {
-    Name: "Item 8",
+    Name: "Overlay 8",
     Image: "https://via.placeholder.com/45",
     Description: "ipsom Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     start: 26,
     end: 28
   },
   {
-    Name: "Item 9",
+    Name: "Overlay 9",
     Image: "https://via.placeholder.com/45",
     Description: "ipsom Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     start: 29,
     end: 30
   },
   {
-    Name: "Item 10",
+    Name: "Overlay 10",
     Image: "https://via.placeholder.com/45",
     Description: "ipsom Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     start: 31,
     end: 34
   },
   {
-    Name: "Item 11",
+    Name: "Overlay 11",
     Image: "https://via.placeholder.com/45",
     Description: "ipsom Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     start: 35,
     end: 37
   },
   {
-    Name: "Item 12",
+    Name: "Overlay 12",
     Image: "https://via.placeholder.com/45",
     Description: "ipsom Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     start: 38,

@@ -18,3 +18,5 @@ Fixed
 - Added relevant documentation in HTML, CSS and JS.
 - Classes critical to JS are prefixed with 'js-'.
 - id names critical to JS are prefixed with 'vid-plugin-'.
+
+- Added variables for JS dependent classes and Ids to vid-plugin.js. Any changes to class/id names can be easily edited in JS.
